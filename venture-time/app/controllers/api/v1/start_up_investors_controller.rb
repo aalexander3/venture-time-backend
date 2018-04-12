@@ -1,0 +1,2 @@
+class StartUpInvestorsController < ApplicationController
+end
