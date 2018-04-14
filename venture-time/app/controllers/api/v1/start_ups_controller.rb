@@ -5,6 +5,8 @@ module Api
       def index
         render json: StartUp.all
       end
+
+      
     end
   end
 end

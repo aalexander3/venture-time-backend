@@ -5,6 +5,7 @@ module Api
       def index
         render json: Investor.all
       end
+
     end
   end
 end
