@@ -9,9 +9,13 @@ module Api
       end
 
       def create
-        @startup = StartUpInvestor.new(investor: @investor, start_up: @startup)
-        if @startup.save
-          render json: @startup
+        @conversation = StartUpInvestor.new(investor: @investor, start_up: @startup)
+        if @conversation.save
+          serialized_data = ActiveModelSerializers::Adapter::Json.new(
+            StartUpInvestorSerializer.new(@conversation)
+          ).serializable_hash
+          ActionCable.server.broadcast 'start_up_investors_channel', serialized_data
+          head :ok
         else
           render json: {errors: "You must login to connect"}
         end
@@ -25,7 +29,7 @@ module Api
       end
 
       def getUserParams
-        require(:investor).permit(:username, :id)
+        require(:investor).permit(:username, :id, :messages)
       end
 
     end

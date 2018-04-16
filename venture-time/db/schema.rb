@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_04_13_181336) do
+ActiveRecord::Schema.define(version: 2018_04_16_155933) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,6 +36,15 @@ ActiveRecord::Schema.define(version: 2018_04_13_181336) do
     t.datetime "updated_at", null: false
     t.string "username"
     t.string "password_digest"
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.text "message_body"
+    t.string "username"
+    t.bigint "start_up_investor_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["start_up_investor_id"], name: "index_messages_on_start_up_investor_id"
   end
 
   create_table "start_up_investors", force: :cascade do |t|
