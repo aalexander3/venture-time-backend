@@ -13,7 +13,7 @@ module Api
         if @startup.save
           render json: @startup
         else
-          render json: {errors: "unable to process your damn request"}
+          render json: {errors: "You must login to connect"}
         end
       end
 
