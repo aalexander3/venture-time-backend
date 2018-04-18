@@ -16,7 +16,7 @@ module Api
 
       private
       def investor_params
-        params.require(:investor).permit(:mission, :description, :interests, :logo, :url, :username, :name, :password, :password_confirmation)
+        params.require(:investor).permit(:mission, :funds_to_invest, :description, :interests, :logo, :url, :username, :name, :password, :password_confirmation)
       end
 
     end
