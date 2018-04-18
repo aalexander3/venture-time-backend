@@ -9,13 +9,14 @@ module Api
       def create
         @investor = Investor.new(investor_params)
         if @investor.save
+          @investor.update(funds_to_invest: 500000)
           render json: Investor.all
         end
       end
 
       private
       def investor_params
-        params.require(:investor).permit(:mission, :description, :interests, :logo, :url, :username, :name)
+        params.require(:investor).permit(:mission, :description, :interests, :logo, :url, :username, :name, :password, :password_confirmation)
       end
 
     end
