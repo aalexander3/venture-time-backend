@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_04_16_155933) do
+ActiveRecord::Schema.define(version: 2018_12_10_174559) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -52,6 +52,8 @@ ActiveRecord::Schema.define(version: 2018_04_16_155933) do
     t.bigint "start_up_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "liked"
+    t.boolean "disliked"
     t.index ["investor_id"], name: "index_start_up_investors_on_investor_id"
     t.index ["start_up_id"], name: "index_start_up_investors_on_start_up_id"
   end
