@@ -1,5 +1,7 @@
 class Api::V1::SessionsController < ApplicationController
 
+  before_action :authenticate!, only: [:reauth]
+
   # skip_before_action :authenticate!, only: [:create]
 
   def create
@@ -24,7 +26,13 @@ class Api::V1::SessionsController < ApplicationController
   end
 
   def reauth
-    byebug
+    if @startup
+      user = StartUpSerializer.new(@start_up).serializable_hash
+      render json: user, status: :accepted
+    elsif @investor
+      user = InvestorSerializer.new(@investor).serializable_hash
+      render json: user, status: :accepted
+    end
   end
 
 end
