@@ -4,9 +4,7 @@ class Api::V1::MessagesController < ApplicationController
      message = Message.new(message_params)
      conversation = StartUpInvestor.find(message_params[:start_up_investor_id])
      if message.save
-       serialized_data = ActiveModelSerializers::Adapter::Json.new(
-         MessageSerializer.new(message)
-       ).serializable_hash
+       serialized_data = MessageSerializer.new(message).serializable_hash
        MessagesChannel.broadcast_to conversation, serialized_data
        head :ok
      end

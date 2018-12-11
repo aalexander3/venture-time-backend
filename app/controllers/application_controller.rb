@@ -3,7 +3,7 @@ class ApplicationController < ActionController::API
   include ActionController::HttpAuthentication::Token::ControllerMethods
 
   def get_secret_key
-    puts ENV["SECRET_KEY"]
+    ENV["SECRET_KEY"]
   end
 
   def issue_token(payload)
@@ -25,11 +25,11 @@ class ApplicationController < ActionController::API
     authenticate_or_request_with_http_token do |jwt_token, options|
       begin
         decoded_token = JWT.decode(jwt_token, get_secret_key)
+        decoded_token[0]["user_id"]
       rescue JWT::DecodeError
-        return nil
+        nil
       end
 
-      return decoded_token[0]["user_id"]
     end
   end
 

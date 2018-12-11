@@ -9,9 +9,7 @@ class Api::V1::StartUpInvestorsController < ApplicationController
   def create
     @conversation = StartUpInvestor.new(investor: @investor, start_up: @startup)
     if @conversation.save
-      serialized_data = ActiveModelSerializers::Adapter::Json.new(
-        StartUpInvestorSerializer.new(@conversation)
-      ).serializable_hash
+      serialized_data = StartUpInvestorSerializer.new(@conversation).serializable_hash
       ActionCable.server.broadcast 'start_up_investors_channel', serialized_data
       head :ok
     else

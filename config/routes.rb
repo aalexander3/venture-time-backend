@@ -5,6 +5,8 @@ Rails.application.routes.draw do
       resources :start_ups
       resources :start_up_investors, only: [:index, :create]
       resources :messages, only: [:create]
+      post '/login', to: 'sessions#create'
+      post '/authorize', to: 'sessions#reauth'
     end
   end
   mount ActionCable.server => '/cable'
