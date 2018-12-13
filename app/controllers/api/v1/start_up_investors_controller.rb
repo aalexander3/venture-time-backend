@@ -7,13 +7,13 @@ class Api::V1::StartUpInvestorsController < ApplicationController
   end
 
   def create
-    @conversation = StartUpInvestor.new(investor: @investor, start_up: @startup)
-    if @conversation.save
+    @conversation = StartUpInvestor.find_or_create_by(investor: @investor, start_up: @startup)
+    if @conversation
       serialized_data = StartUpInvestorSerializer.new(@conversation).serializable_hash
       ActionCable.server.broadcast 'start_up_investors_channel', serialized_data
       head :ok
     else
-      render json: {errors: "You must login to connect"}
+      render json: {errors: "Could not save this connection!"}
     end
   end
 

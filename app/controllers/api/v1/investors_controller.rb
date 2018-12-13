@@ -13,12 +13,15 @@ class Api::V1::InvestorsController < ApplicationController
   end
 
   def create
-    # make some stuff happen with auth here
     @investor = Investor.new(investor_params)
+    @investor.password = params['password'] if params['password'] == params['password_confirmation']
     if @investor.save
       @investor.update(funds_to_invest: 500000)
       investor = InvestorSerializer.new(@investor)
-      render json: investor
+      render json: {
+        token: token_for(@investor),
+        user: investor.serializable_hash
+      }
     else
       render json: {error: "Could not save new investor"}
     end

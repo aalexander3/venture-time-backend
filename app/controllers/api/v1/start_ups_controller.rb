@@ -12,9 +12,14 @@ class Api::V1::StartUpsController < ApplicationController
 
   def create
     @startup = @startup.new(start_up_params)
+    @startup.password = params['password'] if params['password'] == params['password_confirmation']
     if @startup.save
       @startup.update(funds_needed: 30000)
-      render json: StartUp.all
+      serializer = StartUpSerializer.new(@startup)
+      render json: {
+        token: token_for(@investor),
+        user: serializer.serializable_hash
+      }
     end
   end
 
