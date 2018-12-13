@@ -1,10 +1,14 @@
-development:
-  adapter: async
-
-test:
-  adapter: async
-
-production:
-  adapter: redis
-  url: <%= ENV.fetch("REDIS_URL") { "redis://localhost:6379/1" } %>
-  channel_prefix: venture-time_production
+development: &development
+  :url: redis://localhost:6379
+  :host: localhost
+  :port: 6379
+  :timeout: 1
+  :inline: true
+test: *development
+production: &production
+  :url: redis://h:p3428c35dbd94c78d072ee047544abb49e96635b7d3d3ed8445392e0661c5e7bd@ec2-184-73-43-50.compute-1.amazonaws.com:18039
+  :host: ec2-184-73-43-50.compute-1.amazonaws.com
+  :port: 18039
+  :password: p3428c35dbd94c78d072ee047544abb49e96635b7d3d3ed8445392e0661c5e7bd
+  :inline: true
+  :timeout: 1
