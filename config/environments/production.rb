@@ -81,6 +81,7 @@ Rails.application.configure do
   end
 
   config.web_socket_server_url = "wss://investr-api.herokuapp.com/cable"
+  config.action_cable.allowed_request_origins = ['https://app-investr.herokuapp.com', 'http://app-investr.herokuapp.com']
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
