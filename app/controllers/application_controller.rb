@@ -29,9 +29,12 @@ class ApplicationController < ActionController::API
       begin
         decoded_token = JWT.decode(token, get_secret_key)
         user = decoded_token[0]
-        # user = {id: id, username: username}
         @start_up = StartUp.find_by(user)
-        @investor = Investor.find_by(user) unless @start_up
+        if @start_up
+          @start_up
+        else
+          @investor = Investor.find_by(user)
+        end
       rescue JWT::DecodeError
         nil
       end

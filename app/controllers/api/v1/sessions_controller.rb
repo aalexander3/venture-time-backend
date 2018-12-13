@@ -14,19 +14,20 @@ class Api::V1::SessionsController < ApplicationController
       render json: {
         token: token_for(@investor),
         user: serializer.serializable_hash
-      } elsif @startup && @startup.authenticate(params["password"])
+      }
+      elsif @startup && @startup.authenticate(params["password"])
         serializer = StartUpSerializer.new(@startup)
         render json: {
           token: token_for(@startup),
-          user: serializer.serialized_json
+          user: serializer.serializable_hash
         }
       else
-        render json: { errors: ["those credentials don't match anything we've got in our database"]}, :status => :unprocessable_entity
+        render json: { error: "Those credentials don't match anything in our database"}, :status => :unprocessable_entity
       end
   end
 
   def reauth
-    if @startup
+    if @start_up
       user = StartUpSerializer.new(@start_up).serializable_hash
       render json: user, status: :accepted
     elsif @investor
